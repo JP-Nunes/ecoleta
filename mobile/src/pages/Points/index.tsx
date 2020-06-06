@@ -11,7 +11,7 @@ import api from '../../services/api'
 interface Item {
   id: number,
   title: string,
-  image_url:string
+  image_url: string
 }
 
 interface Point {
@@ -20,7 +20,7 @@ interface Point {
   image: string,
   image_url: string,
   latitude: number,
-  longitude: number,
+  longitude: number
 }
 
 interface Params {
@@ -64,6 +64,7 @@ const Points = () => {
   
   useEffect(() => {
     api.get('items').then(response => {
+
       setItems(response.data)
     })
   }, [])
@@ -75,8 +76,8 @@ const Points = () => {
         city: routeParams.city,
         items: selectedItems
       }
-    }).then(reponse => {
-      setPoints(reponse.data)
+    }).then(response => {
+      setPoints(response.data)
     })
   }, [selectedItems])
 
