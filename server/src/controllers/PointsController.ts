@@ -3,26 +3,30 @@ import knex from '../database/connection'
 
 class PointsController {
   async index(request: Request, response: Response) {
-    const { city, uf, items } = request.query
+    try {
+      const { city, uf, items } = request.query
 
-    const parsedItems = String(items).split(',').map(item => Number(item.trim()))
+      const parsedItems = String(items).split(',').map(item => Number(item.trim()))
 
-    const points = await knex('points')
-      .join('point_items', 'points.id', '=', 'point_items.point_id')
-      .whereIn('point_items.item_id', parsedItems)
-      .where('city', String(city))
-      .where('uf', String(uf))
-      .distinct()
-      .select('points.*')
+      const points = await knex('points')
+        .join('point_items', 'points.id', '=', 'point_items.point_id')
+        .whereIn('point_items.item_id', parsedItems)
+        .where('city', String(city))
+        .where('uf', String(uf))
+        .distinct()
+        .select('points.*')
 
-    const serializedPoints = points.map(point => {
-      return {
-        ...point,
-        image_url: `http://localhost:3333/uploads/${point.image}`
-      }
-    })
+      const serializedPoints = points.map(point => {
+        return {
+          ...point,
+          image_url: `http://localhost:3333/uploads/${point.image}`
+        }
+      })
 
-    return response.json({ points: serializedPoints })
+      return response.json({ points: serializedPoints })
+    } catch (error) {
+      console.error(error)
+    }
   }
   async show(request: Request, response: Response) {
     const { id } = request.params

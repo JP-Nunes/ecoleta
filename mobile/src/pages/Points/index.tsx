@@ -66,6 +66,10 @@ const Points = () => {
     api.get('items').then(response => {
 
       setItems(response.data)
+    }).catch(error => {
+      alert('Error ao buscar dados dos itens')
+      
+      return console.log(error)
     })
   }, [])
 
@@ -77,7 +81,12 @@ const Points = () => {
         items: selectedItems
       }
     }).then(response => {
+      
       setPoints(response.data)
+    }).catch(error => {
+      alert('erro ao buscar dados de pontos')
+      
+      return console.log(error)
     })
   }, [selectedItems])
 
