@@ -17,7 +17,6 @@ interface Item {
 interface Point {
   id: number,
   name: string,
-  image: string,
   image_url: string,
   latitude: number,
   longitude: number
@@ -40,7 +39,7 @@ const Points = () => {
 
   const routeParams = route.params as Params
 
-  useEffect(() => {
+  ReauseEffect(() => {
     async function loadPosition() {
       const { status } = await Location.requestPermissionsAsync()
 
@@ -63,7 +62,7 @@ const Points = () => {
   }, [])
   
   useEffect(() => {
-    api.get('items').then(response => {
+    api.get('/items').then(response => {
 
       setItems(response.data)
     }).catch(error => {
@@ -74,7 +73,7 @@ const Points = () => {
   }, [])
 
   useEffect(() => {
-    api.get('points', {
+    api.get('/points', {
       params: {
         uf: routeParams.uf,
         city: routeParams.city,
